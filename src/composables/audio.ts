@@ -5,7 +5,7 @@ export function useAudio () {
         const source = audioContext.createBufferSource();
 
         const audioBuffer = await fetch(
-            '/audio/tada3.mp3',
+            'audio/tada3.mp3',
             {
                 headers: {
                     "Content-Type": "arraybuffer",
