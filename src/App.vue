@@ -1,27 +1,42 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+<template> 
+  <input type="text" v-model="valOne">
+
+  <select v-model="operator">
+    <option v-for="(item, i) in operatorsList" :key="`operator-${i}`" value="item">
+      {{ item }}
+    </option>
+  </select>
+
+  <input type="text" v-model="valTwo">
+
+  <button type="button" @click="handleGetResult()">Решить</button>
+  <button type="button" @click="handleReset()">Сброс</button>
+
+  <p v-show="showResult" class="result">Hello World!</p>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { useAudio } from '@/composables/audio'
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-});
-</script>
+const { getAudio } = useAudio()
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+const valOne = ref<number | null>(null)
+const valTwo = ref<number | null>(null)
+const operator = ref<string>('')
+const showResult = ref<boolean>(false)
+
+const operatorsList = ['+', '-', '*', '/']
+
+const handleGetResult = () => {
+  showResult.value = true
+  getAudio()
 }
-</style>
+
+const handleReset = () => {
+  valOne.value = null
+  valTwo.value = null
+  operator.value = ''
+  showResult.value = false
+}
+</script>
