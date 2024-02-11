@@ -3,21 +3,28 @@
         <label class="number-input__label">{{ props.label }}</label>
 
         <div class="number-input__wrap">
-            <button type="button" @click="handleDecrement()">-</button>
+            <button
+                type="button"
+                @click="handleDecrement()"
+            >-</button>
 
-            <input type="text" value="value" />
+            <input
+                type="text"
+                :value="props.modelValue"
+            />
 
-            <button type="button" @click="handleIncrement()"></button>
+            <button
+                type="button"
+                @click="handleIncrement()"
+            >+</button>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue"
+import { defineProps, defineEmits } from "vue"
 
-export type Value = number | null
-
-const value = ref<Value>(null)
+export type Value = number
 
 const props = defineProps<{
     modelValue: Value
@@ -29,26 +36,12 @@ const emits = defineEmits<{
 }>()
 
 const handleIncrement = () => {
-    if (!value.value) {
-        value.value = 0
-        return
-    }
-
-    value.value++
-
-    emits('update:modelValue', value.value)
+    emits('update:modelValue', props.modelValue + 1)
 }
 
 const handleDecrement = () => {
-    if (!value.value) return
+    if (props.modelValue === 0) return
 
-    if (value.value === 0) {
-        value.value = null
-        return
-    }
-
-    value.value--
-
-    emits('update:modelValue', value.value)
+    emits('update:modelValue', props.modelValue - 1)
 }
 </script>

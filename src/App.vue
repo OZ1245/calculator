@@ -1,57 +1,72 @@
-<template> 
-  <!-- <input type="text" v-model="valOne"> -->
-  <c-number-input v-model="valOne" label="Величина 1"/>
+<template>
+  <c-number-input
+    v-model="valOne"
+    label="Величина 1"
+  />
 
-  <select v-model="operator">
-    <option v-for="(item, i) in operatorsList" :key="`operator-${i}`" value="item">
-      {{ item }}
-    </option>
-  </select>
+  <c-operator-selector v-model="operator" />
 
-  <input type="text" v-model="valTwo">
+  <c-number-input
+    v-model="valTwo"
+    label="Величина 2"
+  />
 
-  <button type="button" @click="handleGetResult()">Решить</button>
-  <button type="button" @click="handleReset()">Сброс</button>
+  <button
+    type="button"
+    :disabled="isDisabled"
+    @click="handleGetResult()"
+  >Решить</button>
 
-  <p v-show="showResult" class="result">Hello World!</p>
+  <button
+    type="button"
+    @click="handleReset()"
+  >Сброс</button>
+
+  <p
+    v-show="showResult"
+    class="result"
+  >Hello World!</p>
 </template>
 
 <script lang="ts" setup>
 import { Value } from './components/CNumberInput.vue'
 
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useAudio } from '@/composables/audio'
-import { useFireworks } from '@/composables/fireworks'
+import { useFireworks } from '@/composables/fireworks.js'
 
 import CNumberInput from './components/CNumberInput.vue'
+import COperatorSelector from './components/COperotorSelector.vue'
 
 const { playAudio } = useAudio()
 const $fireworks = useFireworks()
 
-const valOne = ref<Value>(null)
-const valTwo = ref<number | null>(null)
+const valOne = ref<Value>(0)
+const valTwo = ref<Value>(0)
 const operator = ref<string>('')
 const showResult = ref<boolean>(false)
 
-const operatorsList = ['+', '-', '*', '/']
+const isDisabled = computed((): boolean => (
+  (valOne.value === 0 || valTwo.value === 0 || operator.value === '')
+))
 
 const handleGetResult = () => {
   showResult.value = true
   playAudio()
-  
+
   runFireworks()
 }
 
 const handleReset = () => {
-  valOne.value = null
-  valTwo.value = null
+  valOne.value = 0
+  valTwo.value = 0
   operator.value = ''
   showResult.value = false
 }
 
 const runFireworks = () => {
   $fireworks.init()
-  
+
   $fireworks.explode()
 
   $fireworks.animate()
