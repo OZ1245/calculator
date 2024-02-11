@@ -1,4 +1,6 @@
 <template>
+  <h1 class="title">Калькулятор ver. 6.9.0</h1>
+
   <c-number-input
     v-model="valOne"
     label="Величина 1"
@@ -11,20 +13,18 @@
     label="Величина 2"
   />
 
-  <button
-    type="button"
-    :disabled="isDisabled"
-    @click="handleGetResult()"
-  >Решить</button>
+  <div class="app__buttons">
+    <c-button
+      :disabled="isDisabled"
+      @click="handleGetResult()"
+    >Решить</c-button>
 
-  <button
-    type="button"
-    @click="handleReset()"
-  >Сброс</button>
+    <c-button @click="handleReset()">Сброс</c-button>
+  </div>
 
   <p
     v-show="showResult"
-    class="result"
+    class="app__result"
   >Hello World!</p>
 </template>
 
@@ -37,6 +37,7 @@ import { useFireworks } from '@/composables/fireworks.js'
 
 import CNumberInput from './components/CNumberInput.vue'
 import COperatorSelector from './components/COperotorSelector.vue'
+import CButton from './components/CButton.vue'
 
 const { playAudio } = useAudio()
 const $fireworks = useFireworks()
@@ -76,3 +77,15 @@ const runFireworks = () => {
   }, 2000)
 }
 </script>
+
+<style lang="scss">
+.app__buttons {
+  display: inline-flex;
+  gap: 16px;
+}
+
+.app__result {
+  font-size: 48px;
+  padding-block: 32px;
+}
+</style>
