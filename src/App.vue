@@ -1,5 +1,6 @@
 <template> 
-  <input type="text" v-model="valOne">
+  <!-- <input type="text" v-model="valOne"> -->
+  <c-number-input v-model="valOne" label="Величина 1"/>
 
   <select v-model="operator">
     <option v-for="(item, i) in operatorsList" :key="`operator-${i}`" value="item">
@@ -16,14 +17,18 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { Value } from './components/CNumberInput.vue'
+
+import { ref } from 'vue'
 import { useAudio } from '@/composables/audio'
 import { useFireworks } from '@/composables/fireworks'
+
+import CNumberInput from './components/CNumberInput.vue'
 
 const { playAudio } = useAudio()
 const $fireworks = useFireworks()
 
-const valOne = ref<number | null>(null)
+const valOne = ref<Value>(null)
 const valTwo = ref<number | null>(null)
 const operator = ref<string>('')
 const showResult = ref<boolean>(false)

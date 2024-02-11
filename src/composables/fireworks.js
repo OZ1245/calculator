@@ -1,8 +1,8 @@
 export function useFireworks () {
-  let canvas: any = ''
+  let canvas= ''
   const gravity = 0.05;
   const friction = 0.99;
-  let particles = [];
+  const particles = [];
   let particleCount = 1000;
   let mouse;
   let ctx;
@@ -51,6 +51,7 @@ class Particle {
     // opacity
     this.opacity = 1;
   }
+  
   draw() {
     ctx.save();
     ctx.globalAlpha = this.opacity;
