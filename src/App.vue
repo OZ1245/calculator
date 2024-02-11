@@ -16,10 +16,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useAudio } from '@/composables/audio'
+import { useFireworks } from '@/composables/fireworks'
 
-const { getAudio } = useAudio()
+const { playAudio } = useAudio()
+const $fireworks = useFireworks()
 
 const valOne = ref<number | null>(null)
 const valTwo = ref<number | null>(null)
@@ -30,7 +32,9 @@ const operatorsList = ['+', '-', '*', '/']
 
 const handleGetResult = () => {
   showResult.value = true
-  getAudio()
+  playAudio()
+  
+  runFireworks()
 }
 
 const handleReset = () => {
@@ -38,5 +42,17 @@ const handleReset = () => {
   valTwo.value = null
   operator.value = ''
   showResult.value = false
+}
+
+const runFireworks = () => {
+  $fireworks.init()
+  
+  $fireworks.explode()
+
+  $fireworks.animate()
+
+  setTimeout(() => {
+    $fireworks.destroy()
+  }, 2000)
 }
 </script>
