@@ -19,7 +19,7 @@
       @click="handleGetResult()"
     >Решить</c-button>
 
-    <c-button @click="handleReset()">Сброс</c-button>
+    <c-button @click="handleClickResetButton()">Сброс</c-button>
   </div>
 
   <p
@@ -27,7 +27,10 @@
     class="app__result"
   >Hello World!</p>
 
-  <c-reset-modal v-model="showResetModal" />
+  <c-reset-modal
+    v-model="showResetModal"
+    @reset="handleReset()"
+  />
 
   <!-- <c-modal /> -->
 </template>
@@ -64,13 +67,15 @@ const handleGetResult = () => {
   runFireworks()
 }
 
-const handleReset = () => {
-  // valOne.value = 0
-  // valTwo.value = 0
-  // operator.value = ''
-  // showResult.value = false
-
+const handleClickResetButton = () => {
   showResetModal.value = true
+}
+
+const handleReset = () => {
+  valOne.value = 0
+  valTwo.value = 0
+  operator.value = ''
+  showResult.value = false
 }
 
 const runFireworks = () => {
@@ -95,5 +100,4 @@ const runFireworks = () => {
 .app__result {
   font-size: 48px;
   padding-block: 32px;
-}
-</style>
+}</style>
