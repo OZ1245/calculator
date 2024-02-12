@@ -2,14 +2,14 @@
   <h1 class="title">Калькулятор ver. 6.9.0</h1>
 
   <c-number-input
-    v-model="valOne"
+    v-model.number="valOne"
     label="Величина 1"
   />
 
   <c-operator-selector v-model="operator" />
 
   <c-number-input
-    v-model="valTwo"
+    v-model.number="valTwo"
     label="Величина 2"
   />
 
@@ -26,6 +26,10 @@
     v-show="showResult"
     class="app__result"
   >Hello World!</p>
+
+  <c-reset-modal v-model="showResetModal" />
+
+  <!-- <c-modal /> -->
 </template>
 
 <script lang="ts" setup>
@@ -38,6 +42,7 @@ import { useFireworks } from '@/composables/fireworks.js'
 import CNumberInput from './components/CNumberInput.vue'
 import COperatorSelector from './components/COperotorSelector.vue'
 import CButton from './components/CButton.vue'
+import CResetModal from './components/CResetModal.vue'
 
 const { playAudio } = useAudio()
 const $fireworks = useFireworks()
@@ -46,6 +51,7 @@ const valOne = ref<Value>(0)
 const valTwo = ref<Value>(0)
 const operator = ref<string>('')
 const showResult = ref<boolean>(false)
+const showResetModal = ref<boolean>(false)
 
 const isDisabled = computed((): boolean => (
   (valOne.value === 0 || valTwo.value === 0 || operator.value === '')
@@ -59,10 +65,12 @@ const handleGetResult = () => {
 }
 
 const handleReset = () => {
-  valOne.value = 0
-  valTwo.value = 0
-  operator.value = ''
-  showResult.value = false
+  // valOne.value = 0
+  // valTwo.value = 0
+  // operator.value = ''
+  // showResult.value = false
+
+  showResetModal.value = true
 }
 
 const runFireworks = () => {
