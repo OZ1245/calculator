@@ -43,3 +43,46 @@ canvas {
 
   margin-bottom: 16px;
 }
+
+.frog {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  opacity: 1;
+
+  animation: 1s frog-animate;
+}
+
+.frog--out {
+  animation: 1s frog-animate-out;
+}
+
+@keyframes frog-animate {
+  0% {
+    opacity: 0;
+    transform: rotate(0);
+  }  
+
+  100% {
+    opacity: 1;
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes frog-animate-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

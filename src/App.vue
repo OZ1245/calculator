@@ -41,6 +41,7 @@ import { Value } from './components/CNumberInput.vue'
 import { computed, ref } from 'vue'
 import { useAudio } from '@/composables/audio'
 import { useFireworks } from '@/composables/fireworks.js'
+import { useFrog } from '@/composables/frog'
 
 import CNumberInput from './components/CNumberInput.vue'
 import COperatorSelector from './components/COperotorSelector.vue'
@@ -49,6 +50,7 @@ import CResetModal from './components/CResetModal.vue'
 
 const { playAudio } = useAudio()
 const $fireworks = useFireworks()
+const $frog = useFrog()
 
 const valOne = ref<Value>(0)
 const valTwo = ref<Value>(0)
@@ -62,9 +64,14 @@ const isDisabled = computed((): boolean => (
 
 const handleGetResult = () => {
   showResult.value = true
-  playAudio()
 
-  runFireworks()
+  const now = new Date()
+
+  if (now.getDay() !== 2) {
+    runFireworks()
+  } else {
+    runFrog()
+  }
 }
 
 const handleClickResetButton = () => {
@@ -85,9 +92,21 @@ const runFireworks = () => {
 
   $fireworks.animate()
 
+  playAudio('tada')
+
   setTimeout(() => {
     $fireworks.destroy()
   }, 2000)
+}
+
+const runFrog = () => {
+  $frog.init()
+
+  playAudio('frog')
+
+  setTimeout(() => {
+    $frog.destroy()
+  }, 3000)
 }
 </script>
 
@@ -100,4 +119,5 @@ const runFireworks = () => {
 .app__result {
   font-size: 48px;
   padding-block: 32px;
-}</style>
+}
+</style>
