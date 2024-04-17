@@ -35,7 +35,10 @@
   <!-- <c-modal /> -->
 </template>
 
-<script lang="ts" setup>
+<script
+  lang="ts"
+  setup
+>
 import { Value } from './components/CNumberInput.vue'
 
 import { computed, ref } from 'vue'
@@ -67,7 +70,7 @@ const handleGetResult = () => {
 
   const now = new Date()
 
-  if (now.getDay() !== 2) {
+  if (now.getDay() !== 3) {
     runFireworks()
   } else {
     runFrog()
